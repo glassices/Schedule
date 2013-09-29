@@ -21,3 +21,4 @@
 
 #Qt makefile
 makefile
+*.pro.user
