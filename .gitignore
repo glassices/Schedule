@@ -11,3 +11,10 @@
 *.lai
 *.la
 *.a
+
+# Temporary files
+*.swp
+
+#Qt final project
+*.app
+*.exe
