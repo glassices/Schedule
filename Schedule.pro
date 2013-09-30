@@ -13,6 +13,15 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+	mainwidget.cpp \
+    timebarwidget.cpp \
+    finishedwidget.cpp \
+    failedwidget.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+	mainwidget.h \
+    timebarwidget.h \
+    finishedwidget.h \
+    failedwidget.h \
+    sdk.h
