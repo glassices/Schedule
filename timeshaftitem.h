@@ -8,6 +8,8 @@ class TimeShaftItem : public QGraphicsItem
 {
 public:
     explicit TimeShaftItem();
+    QRectF boundingRect() const;
+    QPainterPath shape() const;
 };
 
 #endif // TIMESHAFTITEM_H
