@@ -17,11 +17,15 @@ SOURCES += main.cpp\
 	mainwidget.cpp \
     timebarwidget.cpp \
     finishedwidget.cpp \
-    failedwidget.cpp
+    failedwidget.cpp \
+    scheduleview.cpp \
+    timeshaftitem.cpp
 
 HEADERS  += mainwindow.h \
 	mainwidget.h \
     timebarwidget.h \
     finishedwidget.h \
     failedwidget.h \
-    sdk.h
+    sdk.h \
+    scheduleview.h \
+    timeshaftitem.h
