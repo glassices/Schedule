@@ -13,6 +13,7 @@ public:
     QPainterPath shape() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 private:
+    qreal ratio;
     ScheduleView *graph;
 };
 

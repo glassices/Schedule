@@ -7,7 +7,7 @@ ScheduleView::ScheduleView(QWidget *parent) :
     scene = new QGraphicsScene(this);
     scene->setItemIndexMethod(QGraphicsScene::NoIndex);
     // This is for test
-    scene->setSceneRect(-300, -100, 600, 200);
+    scene->setSceneRect(-400, -100, 800, 200);
     /* Start setting parameters */
     setScene(scene);
     setCacheMode(QGraphicsView::CacheBackground);
@@ -19,5 +19,5 @@ ScheduleView::ScheduleView(QWidget *parent) :
 
     timeShaft = new TimeShaftItem(this);
     scene->addItem(timeShaft);
-    timeShaft->setPos(0, 0);
+    timeShaft->setPos(0, 70);
 }

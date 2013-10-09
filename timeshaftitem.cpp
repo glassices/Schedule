@@ -1,11 +1,14 @@
 #include "timeshaftitem.h"
 #include "sdk.h"
 #include <QPainter>
+#include <QDebug>
+#include <cmath>
 
 TimeShaftItem::TimeShaftItem(ScheduleView *sheduleView) :
     graph(sheduleView)
 {
     setZValue(-1);
+    ratio = exp(0.1)-1;
 }
 QRectF TimeShaftItem::boundingRect() const
 {
@@ -20,7 +23,13 @@ QPainterPath TimeShaftItem::shape() const
 }
 void TimeShaftItem::paint(QPainter *painter, const QStyleOptionGraphicsItem */*option*/, QWidget *)
 {
-    painter->setPen(Qt::NoPen);
-    painter->setBrush(Qt::darkBlue);
-    painter->drawRect(-100, -5, 200, 10);
+    painter->translate(-gls::TIMER_SHAFT_LENGTH / 2, 0);
+    painter->setPen(Qt::black);
+    painter->setBrush(Qt::NoBrush);
+    //qDebug() << gls::TIMER_SHAFT_LENGTH << endl;
+    painter->drawLine(0, 0, gls::TIMER_SHAFT_LENGTH, 0);
+    for (int i = 0; i < 80; i++) {
+        int drawPosition = qRound(log(i * ratio + 1) * 10 * 30);
+        painter->drawLine(drawPosition, 0, drawPosition, 5);
+    }
 }
