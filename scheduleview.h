@@ -4,6 +4,8 @@
 #include <QGraphicsView>
 #include <QGraphicsScene>
 
+class TimeShaftItem;
+
 class ScheduleView : public QGraphicsView
 {
     Q_OBJECT
@@ -16,6 +18,7 @@ public slots:
 
 private:
     QGraphicsScene *scene;
+    TimeShaftItem *timeShaft;
 };
 
 #endif // SCHEDULEVIEW_H
