@@ -3,10 +3,7 @@
 #include <QPainter>
 #include <QDebug>
 #include <cmath>
-<<<<<<< HEAD
-=======
 #include <QString>
->>>>>>> Glassices
 
 TimeShaftItem::TimeShaftItem(ScheduleView *sheduleView) :
     graph(sheduleView)
@@ -32,11 +29,6 @@ void TimeShaftItem::paint(QPainter *painter, const QStyleOptionGraphicsItem */*o
     painter->setBrush(Qt::NoBrush);
     //qDebug() << gls::TIMER_SHAFT_LENGTH << endl;
     painter->drawLine(0, 0, gls::TIMER_SHAFT_LENGTH, 0);
-<<<<<<< HEAD
-    for (int i = 0; i < 80; i++) {
-        int drawPosition = qRound(log(i * ratio + 1) * 10 * 30);
-        painter->drawLine(drawPosition, 0, drawPosition, 5);
-=======
     painter->setRenderHint(QPainter::Antialiasing);
     painter->drawLine(gls::TIMER_SHAFT_LENGTH, 0, gls::TIMER_SHAFT_LENGTH-10, -3);
     painter->drawLine(gls::TIMER_SHAFT_LENGTH, 0, gls::TIMER_SHAFT_LENGTH-10, +3);
@@ -60,6 +52,5 @@ void TimeShaftItem::paint(QPainter *painter, const QStyleOptionGraphicsItem */*o
                 painter->drawText(QPointF(drawPosition-3, 15), QString("%1h").arg(i * 6));
             previous = drawPosition;
         }
->>>>>>> Glassices
     }
 }
