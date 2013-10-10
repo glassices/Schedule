@@ -4,6 +4,8 @@
 #include <QDebug>
 #include <cmath>
 #include <QGraphicsSceneMouseEvent>
+#include <QTime>
+#include <QDate>
 
 TimeShaftItem::TimeShaftItem(ScheduleView *sheduleView) :
     graph(sheduleView)
@@ -35,6 +37,7 @@ void TimeShaftItem::paint(QPainter *painter, const QStyleOptionGraphicsItem */*o
     //qDebug() << gls::TIMER_SHAFT_LENGTH << endl;
     painter->drawLine(0, 0, gls::TIMER_SHAFT_LENGTH, 0);
     painter->setRenderHint(QPainter::Antialiasing);
+    painter->drawLine(0, 5, 0, -5);
     painter->drawLine(gls::TIMER_SHAFT_LENGTH, 0, gls::TIMER_SHAFT_LENGTH-10, -3);
     painter->drawLine(gls::TIMER_SHAFT_LENGTH, 0, gls::TIMER_SHAFT_LENGTH-10, +3);
     painter->setRenderHint(QPainter::Antialiasing, false);
@@ -42,10 +45,30 @@ void TimeShaftItem::paint(QPainter *painter, const QStyleOptionGraphicsItem */*o
     font.setWeight(0);
     font.setPointSize(10);
     painter->setFont(font);
+
+    QTime time = QTime::currentTime();
+    QTime ending = QTime(23, 59, 59);
+    QDate date = QDate::currentDate();
+    qreal remainHours = (qreal)(time.secsTo(ending) + 1) / 60 / 60;
+    QDate tempDate(date);
+    painter->drawText(QPointF(0, -10), QString("ratio is %1, %2h %3m %4s %5y %6m %7d").arg(ratio).arg(time.hour()).arg(time.minute()).arg(time.second()).arg(date.year()).arg(date.month()).arg(date.day()));
     int previous = -100;
-    for (int i = 0; i < 20; i++) {
-        painter->drawLine(i * 30, 0, i * 30, 5);
-        painter->drawText(QPointF(i * 30 - 3, 15), QString("%1h").arg((int)(startPosition + (exp(i * 0.1) - 1) / (exp(1 * 0.1) - 1) * 6 * ratio)));
+    for (int h = remainHours; ; h += 24) {
+        tempDate = tempDate.addDays(1);
+        if (h + 25 < startPosition) {
+            int ret = (startPosition - h) / 24;
+            h += 24 * ret;
+            tempDate = tempDate.addDays(ret);
+        }
+        if (h >= startPosition) {
+            int x = qRound(log((h - startPosition) / ratio / 6 * (exp(0.1) - 1) + 1) * 300);
+            if (x > gls::TIMER_SHAFT_LENGTH - 10) break;
+            if (x - previous > 30) {
+                painter->drawLine(x, 0, x, 5);
+                painter->drawText(QPointF(x - 10, 15), QString("%1.%2").arg(tempDate.month()).arg(tempDate.day()));
+                previous = x;
+            }
+        }
     }
 }
 void TimeShaftItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
