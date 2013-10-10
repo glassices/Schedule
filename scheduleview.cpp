@@ -2,6 +2,7 @@
 #include "timeshaftitem.h"
 #include <QDebug>
 #include <QWheelEvent>
+#include <QTimer>
 
 ScheduleView::ScheduleView(QWidget *parent) :
     QGraphicsView(parent)
@@ -22,6 +23,11 @@ ScheduleView::ScheduleView(QWidget *parent) :
     timeShaft = new TimeShaftItem(this);
     scene->addItem(timeShaft);
     timeShaft->setPos(0, 70);
+
+    /* Set up timer */
+    QTimer *timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this->scene, SLOT(update()));
+    timer->start(1000);
 }
 void ScheduleView::wheelEvent(QWheelEvent *event)
 {
