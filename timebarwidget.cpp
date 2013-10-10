@@ -9,7 +9,6 @@
 TimeBarWidget::TimeBarWidget(QWidget *parent) :
     QFrame(parent)
 {
-<<<<<<< HEAD
     selectModeButton = new QToolButton;
     selectModeButton->setText(QString("Select"));
     selectModeButton->setCheckable(true);
@@ -33,7 +32,4 @@ TimeBarWidget::TimeBarWidget(QWidget *parent) :
     mainLayout->addLayout(buttonLayout);
     mainLayout->addWidget(schedule);
     setLayout(mainLayout);
-=======
-    schedule = new ScheduleView(this);
->>>>>>> develop
 }

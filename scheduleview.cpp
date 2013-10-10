@@ -1,10 +1,7 @@
 #include "scheduleview.h"
 #include "timeshaftitem.h"
-<<<<<<< HEAD
 #include <QDebug>
 #include <QWheelEvent>
-=======
->>>>>>> develop
 
 ScheduleView::ScheduleView(QWidget *parent) :
     QGraphicsView(parent)
@@ -25,13 +22,10 @@ ScheduleView::ScheduleView(QWidget *parent) :
     timeShaft = new TimeShaftItem(this);
     scene->addItem(timeShaft);
     timeShaft->setPos(0, 70);
-<<<<<<< HEAD
 }
 void ScheduleView::wheelEvent(QWheelEvent *event)
 {
     QPoint delta = event->pixelDelta();
     if (delta.x() != 0) timeShaft->mactransform(delta.x());
     if (delta.y() != 0) timeShaft->zoom(delta.y(), mapToScene(event->pos()));
-=======
->>>>>>> develop
 }
