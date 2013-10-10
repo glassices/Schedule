@@ -4,12 +4,17 @@
 #include <QDebug>
 #include <cmath>
 #include <QString>
+#include <QGraphicsSceneMouseEvent>
 
 TimeShaftItem::TimeShaftItem(ScheduleView *sheduleView) :
     graph(sheduleView)
 {
+    setFlag(ItemIsSelectable);
+    //setAcceptHoverEvents(true);
     setZValue(-1);
     ratio = exp(0.1)-1;
+    isPressed = 0;
+    startPosition = 0;
 }
 QRectF TimeShaftItem::boundingRect() const
 {
@@ -41,6 +46,8 @@ void TimeShaftItem::paint(QPainter *painter, const QStyleOptionGraphicsItem */*o
     for (int i = 0; i < 80; i++) {
         int drawPosition = qRound(log(i * ratio + 1) * 10 * 30);
         if (drawPosition - previous >= 25) {
+            //startPosition + i * 6
+            /*
             if (i > 4 && i % 4 != 0) continue;
             if (i == 3) continue;
             painter->drawLine(drawPosition, 0, drawPosition, 5);
@@ -50,7 +57,36 @@ void TimeShaftItem::paint(QPainter *painter, const QStyleOptionGraphicsItem */*o
                 painter->drawText(QPointF(drawPosition-3, 15), QString("%1d").arg(i / 4));
             else
                 painter->drawText(QPointF(drawPosition-3, 15), QString("%1h").arg(i * 6));
+            */
+
+            painter->drawText(QPointF(drawPosition-3, 15), QString("%1h").arg(startPosition + i * 6));
             previous = drawPosition;
         }
     }
+}
+void TimeShaftItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton) {
+        isPressed = true;
+        //qDebug() << 1 << endl;
+    }
+    QGraphicsItem::mousePressEvent(event);
+}
+void TimeShaftItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton) {
+        isPressed = false;
+        //qDebug() << 2 << endl;
+    }
+    QGraphicsItem::mouseReleaseEvent(event);
+}
+void TimeShaftItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+    //qDebug() << 2 << endl;
+    if (! isPressed) return;
+    QPointF delta = event->pos() - event->lastPos();
+    startPosition -= delta.x();
+    if (startPosition < 0) startPosition = 0;
+    update();
+    QGraphicsItem::mouseMoveEvent(event);
 }

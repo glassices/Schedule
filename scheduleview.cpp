@@ -1,5 +1,6 @@
 #include "scheduleview.h"
 #include "timeshaftitem.h"
+#include <QDebug>
 
 ScheduleView::ScheduleView(QWidget *parent) :
     QGraphicsView(parent)
@@ -20,4 +21,8 @@ ScheduleView::ScheduleView(QWidget *parent) :
     timeShaft = new TimeShaftItem(this);
     scene->addItem(timeShaft);
     timeShaft->setPos(0, 70);
+}
+void mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    qDebug() << "lalaal" << endl;
 }
