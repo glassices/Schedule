@@ -3,7 +3,6 @@
 #include <QPainter>
 #include <QDebug>
 #include <cmath>
-#include <QString>
 #include <QGraphicsSceneMouseEvent>
 
 TimeShaftItem::TimeShaftItem(ScheduleView *sheduleView) :
