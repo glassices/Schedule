@@ -16,6 +16,8 @@ signals:
 
 public slots:
 
+protected:
+    void wheelEvent(QWheelEvent *event);
 private:
     QGraphicsScene *scene;
     TimeShaftItem *timeShaft;

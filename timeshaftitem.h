@@ -12,6 +12,8 @@ public:
     QRectF boundingRect() const;
     QPainterPath shape() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void mactransform(int delta);
+    void zoom(int delta, QPointF scenePosition);
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
@@ -23,7 +25,8 @@ private:
     bool isPressed;
     qreal ratio;
     qreal startPosition; // Start position of the timer shaft
-    ScheduleView *graph;
+    qreal scaleRatio;
+    ScheduleView *graph; // The ratio of scaling
 };
 
 #endif // TIMESHAFTITEM_H
