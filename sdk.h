@@ -18,6 +18,7 @@ namespace gls
     const qreal TIMER_SHAFT_HEIGHT = 50;
     const int TIMER_SHAFT_LENGTH = 700;
     const int MINIMUM_UNDER_WIDGET = 400;
+    const int TIMER_SHAFT_DELTA = 30;
 }
 
 
