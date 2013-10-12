@@ -1,5 +1,6 @@
 #include "scheduleview.h"
 #include "timeshaftitem.h"
+#include "taskitem.h"
 #include <QDebug>
 #include <QWheelEvent>
 #include <QTimer>
@@ -21,6 +22,9 @@ ScheduleView::ScheduleView(QWidget *parent) :
     /* End */
 
     timeShaft = new TimeShaftItem(this);
+    taskItem= new TaskItem(this);
+    scene->addItem(taskItem);
+    taskItem->setPos(0,100);
     scene->addItem(timeShaft);
     timeShaft->setPos(0, 70);
 

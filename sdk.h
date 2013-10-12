@@ -20,6 +20,10 @@ namespace gls
     const int MINIMUM_UNDER_WIDGET = 400;
     const int TIMER_SHAFT_DELTA = 30;
 }
-
+namespace wang
+{
+    const qreal TASK_ITEM_WIDTH=50;
+    const qreal TASK_ITEM_HEIGHT=50;
+}
 
 #endif // SDK_H
