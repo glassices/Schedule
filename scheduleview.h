@@ -5,7 +5,7 @@
 #include <QGraphicsScene>
 
 class TimeShaftItem;
-
+class TaskItem;
 class ScheduleView : public QGraphicsView
 {
     Q_OBJECT
@@ -21,6 +21,7 @@ protected:
 private:
     QGraphicsScene *scene;
     TimeShaftItem *timeShaft;
+   TaskItem *taskItem;
 };
 
 #endif // SCHEDULEVIEW_H

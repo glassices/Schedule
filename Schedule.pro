@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     finishedwidget.cpp \
     failedwidget.cpp \
     scheduleview.cpp \
-    timeshaftitem.cpp
+    timeshaftitem.cpp \
+    taskitem.cpp
 
 HEADERS  += mainwindow.h \
 	mainwidget.h \
@@ -28,4 +29,5 @@ HEADERS  += mainwindow.h \
     failedwidget.h \
     sdk.h \
     scheduleview.h \
-    timeshaftitem.h
+    timeshaftitem.h \
+    taskitem.h
