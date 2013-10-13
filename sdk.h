@@ -22,8 +22,7 @@ namespace gls
 }
 namespace wang
 {
-    const qreal TASK_ITEM_WIDTH=50;
-    const qreal TASK_ITEM_HEIGHT=50;
+    const qreal TASK_ITEM_HEIGHT=20;
 }
 
 #endif // SDK_H

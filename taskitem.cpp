@@ -7,17 +7,18 @@
 #include <QTime>
 #include <QDate>
 
-TaskItem::TaskItem(ScheduleView* scheduleView):
-    graph(scheduleView)
+TaskItem::TaskItem(ScheduleView* scheduleView,QString message):
+    graph(scheduleView),info(message)
 {
     setFlag(ItemIsSelectable);
     setFlag(ItemIsMovable);
     setZValue(-1);
+    width=info.length()*15;
 }
-QRectF boundingRect() const
+QRectF TaskItem::boundingRect() const
 {
     qreal adjust=2;
-    return QRectF(-wang::TASK_ITEM_WIDTH / 2 - adjust, -wang::TASK_ITEM_HEIGHT / 2 - adjust, wang::TASK_ITEM_WIDTH + adjust * 2, wang::TASK_ITEM_HEIGHT + adjust * 2);
+    return QRectF(-width / 2 - adjust, -wang::TASK_ITEM_HEIGHT / 2 - adjust, width + adjust * 2, wang::TASK_ITEM_HEIGHT + adjust * 2);
 
 }
  void TaskItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -27,16 +28,16 @@ QRectF boundingRect() const
      painter->setPen(Qt::black);
      painter->setBrush(Qt::NoBrush);
      QFont font = painter->font();
-     font.setWeight(0);
+     font.setWeight(5);
      font.setPointSize(10);
      painter->setFont(font);
-     painter->drawText(QPointF(-10,0),QString("the first task"));
-     painter->drawRect(QRectF(-TASK_ITEM_WIDTH/2,-TASK_ITEM_HEIGHT/2,TASK_ITEM_WIDTH/2,TASK_ITEM_HEIGHT/2));
+     painter->drawText(QPointF(-width/2,0),info);
+     painter->drawRect(QRectF(-width/2,-wang::TASK_ITEM_HEIGHT/2,width/2,wang::TASK_ITEM_HEIGHT/2));
  }
 QPainterPath TaskItem::shape() const
 {
     QPainterPath path;
-    path.addRect(-wang::TASK_ITEM_WIDTH / 2, -wang::TASK_ITEM_HEIGHT / 2, wang::TASK_ITEM_WIDTH, wang::TASK_ITEM_HEIGHT);
+    path.addRect(-width/ 2, -wang::TASK_ITEM_HEIGHT / 2, width, wang::TASK_ITEM_HEIGHT);
     return path;
 
 }

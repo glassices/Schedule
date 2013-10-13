@@ -7,10 +7,13 @@
 #include "scheduleview.h"
 class TaskItem:public QGraphicsItem
 {
-    explicit TaskItem(ScheduleView *sheduleView);
+public:
+    explicit TaskItem(ScheduleView *sheduleView,QString message);
     QRectF boundingRect() const;
     QPainterPath shape() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 private:
     ScheduleView* graph;
+    QString info;
+    int width;
 };

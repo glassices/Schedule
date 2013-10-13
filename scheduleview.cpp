@@ -22,9 +22,9 @@ ScheduleView::ScheduleView(QWidget *parent) :
     /* End */
 
     timeShaft = new TimeShaftItem(this);
-    taskItem= new TaskItem(this);
+    taskItem= new TaskItem(this,"wangwangwang");
     scene->addItem(taskItem);
-    taskItem->setPos(0,100);
+    taskItem->setPos(100,-50);
     scene->addItem(timeShaft);
     timeShaft->setPos(0, 70);
 
