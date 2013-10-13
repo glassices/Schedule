@@ -21,7 +21,7 @@ protected:
 private:
     QGraphicsScene *scene;
     TimeShaftItem *timeShaft;
-   TaskItem *taskItem;
+    TaskItem *taskItem;
 };
 
 #endif // SCHEDULEVIEW_H
