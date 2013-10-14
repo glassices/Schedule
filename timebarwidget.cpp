@@ -7,6 +7,7 @@
 #include <QVBoxLayout>
 #include <QButtonGroup>
 #include <QDebug>
+#include <QLineEdit>
 
 TimeBarWidget::TimeBarWidget(QWidget *parent) :
     QFrame(parent)
@@ -50,6 +51,10 @@ void TimeBarWidget::showDialog()
 
 
     newDialogBox->exec();
+    if (newDialogBox->result() == QDialog::Accepted) {
+        qDebug() << newDialogBox->nameEdit->text() << endl;
+    }
+
 
     delete newDialogBox;
 

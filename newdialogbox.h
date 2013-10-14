@@ -15,6 +15,7 @@ class NewDialogBox : public QDialog
 public:
     explicit NewDialogBox(QWidget *parent = 0);
 
+    QLineEdit *nameEdit;
 signals:
 
 public slots:
@@ -25,7 +26,6 @@ private:
     QHBoxLayout *buttonLayout;
     QVBoxLayout *mainLayout;
     QLabel *nameLabel;
-    QLineEdit *nameEdit;
 };
 
 #endif // NEWDIALOGBOX_H
