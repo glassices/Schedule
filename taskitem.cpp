@@ -4,16 +4,17 @@
 #include <QDebug>
 #include <cmath>
 #include <QGraphicsSceneMouseEvent>
+#include <QDateTime>
 #include <QTime>
 #include <QDate>
 
-TaskItem::TaskItem(ScheduleView* scheduleView,QString message):
-    graph(scheduleView),info(message)
+TaskItem::TaskItem(ScheduleView* scheduleView, QString message, QDateTime dt):
+    graph(scheduleView), info(message), datetime(dt)
 {
     setFlag(ItemIsSelectable);
     setFlag(ItemIsMovable);
     setZValue(-1);
-    width=info.length()*15;
+    width = info.length() * 15;
 }
 QRectF TaskItem::boundingRect() const
 {

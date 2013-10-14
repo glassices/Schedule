@@ -8,6 +8,9 @@
 #include <QButtonGroup>
 #include <QDebug>
 #include <QLineEdit>
+#include <QDateTime>
+#include <QDate>
+#include <QTime>
 
 TimeBarWidget::TimeBarWidget(QWidget *parent) :
     QFrame(parent)
@@ -53,9 +56,9 @@ void TimeBarWidget::showDialog()
     newDialogBox->exec();
     if (newDialogBox->result() == QDialog::Accepted) {
         qDebug() << newDialogBox->nameEdit->text() << endl;
+        QDateTime datetime(QDate(newDialogBox->yearEdit->text().toInt(), 0, 0), QTime(0, 0, 0));
+        schedule->insertTask(newDialogBox->nameEdit->text(), datetime);
     }
 
-
     delete newDialogBox;
-
 }
