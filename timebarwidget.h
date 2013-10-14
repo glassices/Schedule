@@ -9,6 +9,7 @@ class QToolButton;
 class QHBoxLayout;
 class QVBoxLayout;
 class QButtonGroup;
+class NewDialogBox;
 
 class TimeBarWidget : public QFrame
 {
@@ -16,13 +17,17 @@ class TimeBarWidget : public QFrame
 
 public:
     explicit TimeBarWidget(QWidget *parent = 0);
+private slots:
+    void showDialog();
 private:
     ScheduleView *schedule;
     QToolButton *selectModeButton;
     QToolButton *dragModeButton;
+    QToolButton *newButton;
     QHBoxLayout *buttonLayout;
     QVBoxLayout *mainLayout;
     QButtonGroup *pointerModeGroup;
+    NewDialogBox *newDialogBox;
 };
 
 #endif // TIMEBARWIDGET_H
