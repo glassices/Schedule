@@ -7,8 +7,8 @@
 #include <QTime>
 #include <QDate>
 
-TimeShaftItem::TimeShaftItem(ScheduleView *sheduleView) :
-    graph(sheduleView)
+TimeShaftItem::TimeShaftItem(ScheduleView *scheduleView) :
+    graph(scheduleView)
 {
     setFlag(ItemIsSelectable);
     //setAcceptHoverEvents(true);

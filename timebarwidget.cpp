@@ -1,10 +1,12 @@
 #include "timebarwidget.h"
 #include "scheduleview.h"
+#include "newdialogbox.h"
 #include <QPalette>
 #include <QToolButton>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QButtonGroup>
+#include <QDebug>
 
 TimeBarWidget::TimeBarWidget(QWidget *parent) :
     QFrame(parent)
@@ -17,6 +19,10 @@ TimeBarWidget::TimeBarWidget(QWidget *parent) :
     dragModeButton->setText(QString("Drag"));
     dragModeButton->setCheckable(true);
     dragModeButton->setChecked(false);
+    newButton = new QToolButton;
+    newButton->setText(QString("New"));
+    newButton->setCheckable(true);
+    newButton->setChecked(false);
 
     QButtonGroup *pointerModeGroup = new QButtonGroup;
     pointerModeGroup->setExclusive(true);
@@ -29,7 +35,22 @@ TimeBarWidget::TimeBarWidget(QWidget *parent) :
     mainLayout = new QVBoxLayout;
     buttonLayout->addWidget(selectModeButton);
     buttonLayout->addWidget(dragModeButton);
+    buttonLayout->addWidget(newButton);
     mainLayout->addLayout(buttonLayout);
     mainLayout->addWidget(schedule);
     setLayout(mainLayout);
+
+    connect(newButton, SIGNAL(clicked()), this, SLOT(showDialog()));
+}
+void TimeBarWidget::showDialog()
+{
+    qDebug() << 1 << endl;
+    newDialogBox = new NewDialogBox;
+    newButton->setChecked(false);
+
+
+    newDialogBox->exec();
+
+    delete newDialogBox;
+
 }
