@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include <QApplication>
+#include <QSettings>
+#include <QDebug>
 
 int main(int argc, char *argv[])
 {
@@ -7,6 +9,7 @@ int main(int argc, char *argv[])
     app.setOrganizationName("IIIS");
     app.setOrganizationDomain("iiis.com");
     app.setApplicationName("Schedule");
+    QSettings setting;
     MainWindow mainWindow;
     mainWindow.show();
 
