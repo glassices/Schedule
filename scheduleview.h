@@ -11,6 +11,7 @@ class ScheduleView : public QGraphicsView
     Q_OBJECT
 public:
     explicit ScheduleView(QWidget *parent = 0);
+    void insertTask(QString name, QDateTime dt);
 
 signals:
 

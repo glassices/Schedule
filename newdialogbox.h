@@ -16,6 +16,11 @@ public:
     explicit NewDialogBox(QWidget *parent = 0);
 
     QLineEdit *nameEdit;
+    QLineEdit *yearEdit;
+    QLineEdit *monthEdit;
+    QLineEdit *dayEdit;
+    QLineEdit *hourEdit;
+    QLineEdit *minuteEdit;
 signals:
 
 public slots:
@@ -23,9 +28,16 @@ private:
     QToolButton *checkYes;
     QToolButton *checkNo;
     QHBoxLayout *nameLayout;
+    QHBoxLayout *dateLayout;
+    QHBoxLayout *timeLayout;
     QHBoxLayout *buttonLayout;
     QVBoxLayout *mainLayout;
     QLabel *nameLabel;
+    QLabel *yearLabel;
+    QLabel *monthLabel;
+    QLabel *dayLabel;
+    QLabel *hourLabel;
+    QLabel *minuteLabel;
 };
 
 #endif // NEWDIALOGBOX_H

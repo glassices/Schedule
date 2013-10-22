@@ -15,6 +15,30 @@ NewDialogBox::NewDialogBox(QWidget *parent) :
     nameLayout->addWidget(nameLabel);
     nameLayout->addWidget(nameEdit);
 
+    yearLabel = new QLabel(QString("year"));
+    yearEdit = new QLineEdit;
+    monthLabel = new QLabel(QString("month"));
+    monthEdit = new QLineEdit;
+    dayLabel = new QLabel(QString("day"));
+    dayEdit = new QLineEdit;
+    dateLayout = new QHBoxLayout;
+    dateLayout->addWidget(yearLabel);
+    dateLayout->addWidget(yearEdit);
+    dateLayout->addWidget(monthLabel);
+    dateLayout->addWidget(monthEdit);
+    dateLayout->addWidget(dayLabel);
+    dateLayout->addWidget(dayEdit);
+
+    hourLabel = new QLabel(QString("hour"));
+    hourEdit = new QLineEdit;
+    minuteLabel = new QLabel(QString("minute"));
+    minuteEdit = new QLineEdit;
+    timeLayout = new QHBoxLayout;
+    timeLayout->addWidget(hourLabel);
+    timeLayout->addWidget(hourEdit);
+    timeLayout->addWidget(minuteLabel);
+    timeLayout->addWidget(minuteEdit);
+
     checkYes = new QToolButton(this);
     checkYes->setText(QString("yes"));
     checkYes->setCheckable(true);
@@ -30,6 +54,8 @@ NewDialogBox::NewDialogBox(QWidget *parent) :
 
     mainLayout = new QVBoxLayout;
     mainLayout->addLayout(nameLayout);
+    mainLayout->addLayout(dateLayout);
+    mainLayout->addLayout(timeLayout);
     mainLayout->addLayout(buttonLayout);
     setLayout(mainLayout);
 
