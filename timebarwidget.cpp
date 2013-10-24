@@ -62,6 +62,7 @@ void TimeBarWidget::readItems()
         items.append(record);
     }
     settings.endArray();
+    qDebug() << items.size() << endl;
 }
 void TimeBarWidget::writeItems()
 {
@@ -76,7 +77,6 @@ void TimeBarWidget::writeItems()
 }
 void TimeBarWidget::showDialog()
 {
-    qDebug() << 1 << endl;
     newDialogBox = new NewDialogBox;
     newButton->setChecked(false);
 

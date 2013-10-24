@@ -5,6 +5,7 @@
 #include <QWheelEvent>
 #include <QTimer>
 #include <QDatetime>
+#include <QList>
 
 ScheduleView::ScheduleView(QWidget *parent) :
     QGraphicsView(parent)
@@ -33,6 +34,8 @@ ScheduleView::ScheduleView(QWidget *parent) :
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this->scene, SLOT(update()));
     timer->start(1000);
+
+    refreshTimerId = startTimer(1000 / 10);
 }
 void ScheduleView::wheelEvent(QWheelEvent *event)
 {
@@ -45,4 +48,14 @@ void ScheduleView::insertTask(QString name, QDateTime dt)
     taskItem = new TaskItem(this, name, dt);
     scene->addItem(taskItem);
     taskItem->setPos(100, -50);
+}
+void ScheduleView::refreshItemPosition()
+{
+    //qDebug() << items().size() << endl;
+}
+void ScheduleView::timerEvent(QTimerEvent *event)
+{
+    if (event->timerId() == refreshTimerId) {
+        qDebug() << items().size() << endl;
+    }
 }

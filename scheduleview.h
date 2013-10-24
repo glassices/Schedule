@@ -18,11 +18,15 @@ signals:
 public slots:
 
 protected:
-    void wheelEvent(QWheelEvent *event);
+    void wheelEvent(QWheelEvent *);
+    void timerEvent(QTimerEvent *);
 private:
+    int refreshTimerId;
     QGraphicsScene *scene;
     TimeShaftItem *timeShaft;
     TaskItem *taskItem;
+
+    void refreshItemPosition();
 };
 
 #endif // SCHEDULEVIEW_H
