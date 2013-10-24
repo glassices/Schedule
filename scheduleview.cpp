@@ -33,6 +33,19 @@ ScheduleView::ScheduleView(QWidget *parent) :
     scene->addItem(timeShaft);
     timeShaft->setPos(0, 70);
 
+    /* Here we put all items into the scene */
+    QDateTime currentDateTime = QDateTime::currentDateTime();
+    for (int i = 0; i < items->size(); i++)
+        if (items->at(i).dateTime > currentDateTime) {
+            TaskItem *taskItem = new TaskItem(this, items->at(i).itemName, items->at(i).dateTime);
+            scene->addItem(taskItem);
+            taskItem->setPos(0, 0);
+        }
+        else {
+            qDebug() << items->at(i).dateTime << endl;
+        }
+    /* Here we put all items into the scene */
+
     /* Set up timer */
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this->scene, SLOT(update()));
@@ -60,5 +73,8 @@ void ScheduleView::timerEvent(QTimerEvent *event)
 {
     if (event->timerId() == refreshTimerId) {
         qDebug() << items->size() << endl;
+        for (int i = 0; i < items->size(); i++)
+            qDebug() << items->at(i).dateTime << ' ';
+        qDebug() << endl;
     }
 }

@@ -83,12 +83,9 @@ void TimeBarWidget::showDialog()
     newDialogBox = new NewDialogBox;
     newButton->setChecked(false);
 
-
     newDialogBox->exec();
     if (newDialogBox->result() == QDialog::Accepted) {
-        qDebug() << newDialogBox->nameEdit->text() << endl;
-        QDateTime datetime(QDate(newDialogBox->yearEdit->text().toInt(), 0, 0), QTime(0, 0, 0));
-
+        QDateTime datetime(QDate(newDialogBox->yearEdit->text().toInt(), 1, 1), QTime(0, 0, 0));
         gls::Record record;
         record.dateTime = datetime;
         record.itemName = newDialogBox->nameEdit->text();

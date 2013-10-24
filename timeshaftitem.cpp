@@ -7,6 +7,10 @@
 #include <QTime>
 #include <QDate>
 
+int TimeShaftItem::calcPosition(qreal hour)
+{
+    return qRound(log((hour - startPosition) * (exp(0.1) - 1) / 6 + 1) * 300 / ratio);
+}
 TimeShaftItem::TimeShaftItem(ScheduleView *scheduleView) :
     graph(scheduleView)
 {
@@ -31,48 +35,48 @@ QPainterPath TimeShaftItem::shape() const
     path.addRect(-gls::TIMER_SHAFT_WIDTH / 2, -gls::TIMER_SHAFT_HEIGHT / 2, gls::TIMER_SHAFT_WIDTH, gls::TIMER_SHAFT_HEIGHT);
     return path;
 }
-void subDraw(QPainter *painter, qreal &startPosition, qreal &ratio, qreal H, qreal previous, qreal current, int flag, int curHour, int curMinute = 60)
+void TimeShaftItem::subDraw(QPainter *painter, qreal H, qreal previous, qreal current, int flag, int curHour, int curMinute)
 {
     if (current - previous <= gls::TIMER_SHAFT_DELTA * 2) return;
     if (flag == 0) {
         // draw 12:00
         qreal h = H - 12;
-        int x = qRound(log((h - startPosition) * (exp(0.1) - 1) / 6 + 1) * 300 / ratio);
+        int x = calcPosition(h);
         if (x - previous > gls::TIMER_SHAFT_DELTA && current - x > gls::TIMER_SHAFT_DELTA && x >= 0 && x <= gls::TIMER_SHAFT_LENGTH - 10) {
             painter->drawLine(x, 0, x, 5);
             painter->drawText(QPointF(x - 10, 15), QString("12:00"));
         }
-        subDraw(painter, startPosition, ratio, h, previous, x, 1, curHour -  12);
-        subDraw(painter, startPosition, ratio, H, x, current, 1, curHour);
+        subDraw(painter, h, previous, x, 1, curHour -  12);
+        subDraw(painter, H, x, current, 1, curHour);
     }
     else if (flag == 1) {
         // draw 6:00
         qreal h = H - 6;
-        int x = qRound(log((h - startPosition) * (exp(0.1) - 1) / 6 + 1) * 300 / ratio);
+        int x = calcPosition(h);
         if (x - previous > gls::TIMER_SHAFT_DELTA && current - x > gls::TIMER_SHAFT_DELTA && x >= 0 && x <= gls::TIMER_SHAFT_LENGTH - 10) {
             painter->drawLine(x, 0, x, 5);
             painter->drawText(QPointF(x - 10, 15), QString("%1:00").arg(curHour - 6));
         }
-        subDraw(painter, startPosition, ratio, h, previous, x, 2, curHour - 6);
-        subDraw(painter, startPosition, ratio, H, x, current, 2, curHour);
+        subDraw(painter, h, previous, x, 2, curHour - 6);
+        subDraw(painter, H, x, current, 2, curHour);
     }
     else if (flag == 2) {
         // draw 3:00
         qreal h = H - 3;
-        int x = qRound(log((h - startPosition) * (exp(0.1) - 1) / 6 + 1) * 300 / ratio);
+        int x = calcPosition(h);
         if (x - previous > gls::TIMER_SHAFT_DELTA && current - x > gls::TIMER_SHAFT_DELTA && x >= 0 && x <= gls::TIMER_SHAFT_LENGTH - 10) {
             painter->drawLine(x, 0, x, 5);
             painter->drawText(QPointF(x - 10, 15), QString("%1:00").arg(curHour - 3));
         }
-        subDraw(painter, startPosition, ratio, h, previous, x, 3, curHour - 3);
-        subDraw(painter, startPosition, ratio, H, x, current, 3, curHour);
+        subDraw(painter, h, previous, x, 3, curHour - 3);
+        subDraw(painter, H, x, current, 3, curHour);
     }
     else if (flag == 3) {
         // draw 1:00 and 2:00
         qreal h1 = H - 2;
         qreal h2 = H - 1;
-        int x1 = qRound(log((h1 - startPosition) * (exp(0.1) - 1) / 6 + 1) * 300 / ratio);
-        int x2 = qRound(log((h2 - startPosition) * (exp(0.1) - 1) / 6 + 1) * 300 / ratio);
+        int x1 = calcPosition(h1);
+        int x2 = calcPosition(h2);
         //qDebug() << previous << ' ' << current << ' ' << x1 << ' ' << x2 << endl;
         if (x1 - previous > gls::TIMER_SHAFT_DELTA && x2 - x1 > gls::TIMER_SHAFT_DELTA && current - x2 > gls::TIMER_SHAFT_DELTA) {
             if (x1 >= 0 && x1 <= gls::TIMER_SHAFT_LENGTH - 10) {
@@ -84,38 +88,38 @@ void subDraw(QPainter *painter, qreal &startPosition, qreal &ratio, qreal H, qre
                 painter->drawText(QPointF(x2 - 10, 15), QString("%1:00").arg(curHour - 1));
             }
         }
-        subDraw(painter, startPosition, ratio, h1, previous, x1, 4, curHour - 2);
-        subDraw(painter, startPosition, ratio, h2, x1, x2, 4, curHour - 1);
-        subDraw(painter, startPosition, ratio, H, x2, current, 4, curHour);
+        subDraw(painter, h1, previous, x1, 4, curHour - 2);
+        subDraw(painter, h2, x1, x2, 4, curHour - 1);
+        subDraw(painter, H, x2, current, 4, curHour);
     }
     else if (flag  == 4) {
         // draw 0:30
         qreal h = H - 0.5;
-        int x = qRound(log((h - startPosition) * (exp(0.1) - 1) / 6 + 1) * 300 / ratio);
+        int x = calcPosition(h);
         if (x - previous > gls::TIMER_SHAFT_DELTA && current - x > gls::TIMER_SHAFT_DELTA && x >= 0 && x <= gls::TIMER_SHAFT_LENGTH - 10) {
             painter->drawLine(x, 0, x, 5);
             painter->drawText(QPointF(x - 10, 15), QString("%1:30").arg(curHour - 1));
         }
-        subDraw(painter, startPosition, ratio, h, previous, x, 5, curHour, 30);
-        subDraw(painter, startPosition, ratio, H, x, current, 5, curHour, 60);
+        subDraw(painter, h, previous, x, 5, curHour, 30);
+        subDraw(painter, H, x, current, 5, curHour, 60);
     }
     else if (flag == 5) {
         // draw 0:15
         qreal h = H - 0.25;
-        int x = qRound(log((h - startPosition) * (exp(0.1) - 1) / 6 + 1) * 300 / ratio);
+        int x = calcPosition(h);
         if (x - previous > gls::TIMER_SHAFT_DELTA && current - x > gls::TIMER_SHAFT_DELTA && x >= 0 && x <= gls::TIMER_SHAFT_LENGTH - 10) {
             painter->drawLine(x, 0, x, 5);
             painter->drawText(QPointF(x - 10, 15), QString("%1:%2").arg(curHour - 1).arg(curMinute - 15));
         }
-        subDraw(painter, startPosition, ratio, h, previous, x, 6, curHour, curMinute - 15);
-        subDraw(painter, startPosition, ratio, H, x, current, 6, curHour, curMinute);
+        subDraw(painter, h, previous, x, 6, curHour, curMinute - 15);
+        subDraw(painter, H, x, current, 6, curHour, curMinute);
     }
     else if (flag == 6) {
         // draw 0:05 && 0:10
         qreal h1 = H - 0.25 * 2 / 3;
         qreal h2 = H - 0.25 / 3;
-        int x1 = qRound(log((h1 - startPosition) * (exp(0.1) - 1) / 6 + 1) * 300 / ratio);
-        int x2 = qRound(log((h2 - startPosition) * (exp(0.1) - 1) / 6 + 1) * 300 / ratio);
+        int x1 = calcPosition(h1);
+        int x2 = calcPosition(h2);
         if (x1 - previous > gls::TIMER_SHAFT_DELTA && x2 - x1 > gls::TIMER_SHAFT_DELTA && current - x2 > gls::TIMER_SHAFT_DELTA) {
             if (x1 >= 0 && x1 <= gls::TIMER_SHAFT_LENGTH - 10) {
                 painter->drawLine(x1, 0, x1, 5);
@@ -129,9 +133,9 @@ void subDraw(QPainter *painter, qreal &startPosition, qreal &ratio, qreal H, qre
                 painter->drawText(QPointF(x2 - 10, 15), QString("%1:%2").arg(curHour - 1).arg(curMinute - 5));
             }
         }
-        subDraw(painter, startPosition, ratio, h1, previous, x1, 7, curHour, curMinute - 10);
-        subDraw(painter, startPosition, ratio, h2, x1, x2, 7, curHour, curMinute - 5);
-        subDraw(painter, startPosition, ratio, H, x2, current, 7, curHour, curMinute);
+        subDraw(painter, h1, previous, x1, 7, curHour, curMinute - 10);
+        subDraw(painter, h2, x1, x2, 7, curHour, curMinute - 5);
+        subDraw(painter, H, x2, current, 7, curHour, curMinute);
     }
 }
 void TimeShaftItem::paint(QPainter *painter, const QStyleOptionGraphicsItem */*option*/, QWidget *)
@@ -173,7 +177,7 @@ void TimeShaftItem::paint(QPainter *painter, const QStyleOptionGraphicsItem */*o
     }
     double previous = -100;
     for ( ; ; ) {
-        int x = qRound(log((h - startPosition) * (exp(0.1) - 1) / 6 + 1) * 300 / ratio);
+        int x = calcPosition(h);
         QDate preDate(date);
         preDate = preDate.addDays(-1);
         int preH = h - 24;
@@ -187,7 +191,7 @@ void TimeShaftItem::paint(QPainter *painter, const QStyleOptionGraphicsItem */*o
             previous = x;
         }
         if (x <= gls::TIMER_SHAFT_LENGTH - 10 || preX <= gls::TIMER_SHAFT_LENGTH - 10)
-            subDraw(painter, startPosition, ratio, h, preX, x, 0, 24);
+            subDraw(painter, h, preX, x, 0, 24);
         if (x > gls::TIMER_SHAFT_LENGTH - 10) break;
         date = date.addDays(1);
         h += 24;
