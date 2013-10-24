@@ -1,4 +1,5 @@
 #include "scheduleview.h"
+#include "timebarwidget.h"
 #include "timeshaftitem.h"
 #include "taskitem.h"
 #include <QDebug>
@@ -10,6 +11,8 @@
 ScheduleView::ScheduleView(QWidget *parent) :
     QGraphicsView(parent)
 {
+    items = ((TimeBarWidget *)parent)->showItems();
+    qDebug() << "hehe" << items->size() << endl;
     scene = new QGraphicsScene(this);
     scene->setItemIndexMethod(QGraphicsScene::NoIndex);
     // This is for test
@@ -56,6 +59,6 @@ void ScheduleView::refreshItemPosition()
 void ScheduleView::timerEvent(QTimerEvent *event)
 {
     if (event->timerId() == refreshTimerId) {
-        qDebug() << items().size() << endl;
+        qDebug() << items->size() << endl;
     }
 }

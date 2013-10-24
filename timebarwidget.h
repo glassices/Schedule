@@ -4,6 +4,7 @@
 #include <QFrame>
 #include <QWidget>
 #include <QDateTime>
+#include "sdk.h"
 
 class ScheduleView;
 class QToolButton;
@@ -12,18 +13,13 @@ class QVBoxLayout;
 class QButtonGroup;
 class NewDialogBox;
 
-struct Record
-{
-    QDateTime dateTime;
-    QString itemName;
-};
-
 class TimeBarWidget : public QFrame
 {
     Q_OBJECT
 
 public:
     explicit TimeBarWidget(QWidget *parent = 0);
+    QList<gls::Record> *showItems();
 private slots:
     void showDialog();
 private:
@@ -35,7 +31,7 @@ private:
     QVBoxLayout *mainLayout;
     QButtonGroup *pointerModeGroup;
     NewDialogBox *newDialogBox;
-    QList<Record> items;
+    QList<gls::Record> items;
 
     void readItems();
     void writeItems();

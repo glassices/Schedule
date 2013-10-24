@@ -49,6 +49,10 @@ TimeBarWidget::TimeBarWidget(QWidget *parent) :
 
     connect(newButton, SIGNAL(clicked()), this, SLOT(showDialog()));
 }
+QList<gls::Record> *TimeBarWidget::showItems()
+{
+    return &items;
+}
 void TimeBarWidget::readItems()
 {
     items.clear();
@@ -56,13 +60,12 @@ void TimeBarWidget::readItems()
     int size = settings.beginReadArray("items");
     for (int i = 0; i < size; i++) {
         settings.setArrayIndex(i);
-        Record record;
+        gls::Record record;
         record.dateTime = settings.value("dateTime").toDateTime();
         record.itemName = settings.value("itemName").toString();
         items.append(record);
     }
     settings.endArray();
-    qDebug() << items.size() << endl;
 }
 void TimeBarWidget::writeItems()
 {
@@ -86,7 +89,7 @@ void TimeBarWidget::showDialog()
         qDebug() << newDialogBox->nameEdit->text() << endl;
         QDateTime datetime(QDate(newDialogBox->yearEdit->text().toInt(), 0, 0), QTime(0, 0, 0));
 
-        Record record;
+        gls::Record record;
         record.dateTime = datetime;
         record.itemName = newDialogBox->nameEdit->text();
         items.append(record);

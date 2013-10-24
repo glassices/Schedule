@@ -3,9 +3,11 @@
 
 #include <QGraphicsView>
 #include <QGraphicsScene>
+#include "sdk.h"
 
 class TimeShaftItem;
 class TaskItem;
+
 class ScheduleView : public QGraphicsView
 {
     Q_OBJECT
@@ -25,6 +27,7 @@ private:
     QGraphicsScene *scene;
     TimeShaftItem *timeShaft;
     TaskItem *taskItem;
+    QList<gls::Record> *items;
 
     void refreshItemPosition();
 };

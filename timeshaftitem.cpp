@@ -10,6 +10,8 @@
 TimeShaftItem::TimeShaftItem(ScheduleView *scheduleView) :
     graph(scheduleView)
 {
+    Q_UNUSED(graph);
+
     setFlag(ItemIsSelectable);
     //setAcceptHoverEvents(true);
     setZValue(-1);
