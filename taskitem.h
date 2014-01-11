@@ -12,8 +12,8 @@ public:
     QRectF boundingRect() const;
     QPainterPath shape() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-private:
     ScheduleView* graph;
     QString info;
-    int width;
+    float width;
+    float height;
 };

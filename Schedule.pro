@@ -10,8 +10,6 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Schedule
 TEMPLATE = app
-
-
 SOURCES += main.cpp\
         mainwindow.cpp \
 	mainwidget.cpp \
@@ -33,3 +31,6 @@ HEADERS  += mainwindow.h \
     timeshaftitem.h \
     taskitem.h \
     newdialogbox.h
+
+RESOURCES += \
+    resource.qrc

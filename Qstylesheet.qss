@@ -1,0 +1,5 @@
+NewDialogBox
+{
+Background-color: red;
+color: blue;
+}

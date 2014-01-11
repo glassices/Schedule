@@ -13,31 +13,35 @@ TaskItem::TaskItem(ScheduleView* scheduleView,QString message):
     setFlag(ItemIsSelectable);
     setFlag(ItemIsMovable);
     setZValue(-1);
-    width=info.length()*15;
 }
 QRectF TaskItem::boundingRect() const
 {
     qreal adjust=2;
-    return QRectF(-width / 2 - adjust, -wang::TASK_ITEM_HEIGHT / 2 - adjust, width + adjust * 2, wang::TASK_ITEM_HEIGHT + adjust * 2);
+    return QRectF(-width / 2 - adjust, -height / 2 - adjust, width + adjust * 2, height + adjust * 2);
 
 }
  void TaskItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
  {
      Q_UNUSED(option);
      Q_UNUSED(widget);
-     painter->setPen(Qt::black);
-     painter->setBrush(Qt::NoBrush);
+     painter->setPen(Qt::white);
      QFont font = painter->font();
-     font.setWeight(5);
-     font.setPointSize(10);
+     font.setWeight(1);
+     font.setFamily("Helvetica");
+     font.setPointSize(15);
+     width=info.length()*font.pointSize();
+     height=font.pointSize()*1.5;
      painter->setFont(font);
+     painter->setBrush(Qt::blue);
+     painter->setRenderHint(QPainter::Antialiasing, true);
+     painter->drawRect(QRectF(-width/2,-height/2,width/2,height/2));
+     painter->setBrush(Qt::NoBrush);
      painter->drawText(QPointF(-width/2,0),info);
-     painter->drawRect(QRectF(-width/2,-wang::TASK_ITEM_HEIGHT/2,width/2,wang::TASK_ITEM_HEIGHT/2));
  }
 QPainterPath TaskItem::shape() const
 {
     QPainterPath path;
-    path.addRect(-width/ 2, -wang::TASK_ITEM_HEIGHT / 2, width, wang::TASK_ITEM_HEIGHT);
+    path.addRect(-width/ 2, -height / 2, width, height/2);
     return path;
 
 }
