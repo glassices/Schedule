@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     failedwidget.cpp \
     scheduleview.cpp \
     timeshaftitem.cpp \
-    taskitem.cpp
+    taskitem.cpp \
+    newdialogbox.cpp
 
 HEADERS  += mainwindow.h \
 	mainwidget.h \
@@ -30,4 +31,5 @@ HEADERS  += mainwindow.h \
     sdk.h \
     scheduleview.h \
     timeshaftitem.h \
-    taskitem.h
+    taskitem.h \
+    newdialogbox.h
