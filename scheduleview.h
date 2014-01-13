@@ -16,6 +16,7 @@ public:
     void insertTask(QString name, QDateTime dt);
 
 signals:
+    void failItem(QDateTime, QString);
 
 public slots:
 

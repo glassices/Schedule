@@ -1,7 +1,7 @@
 #ifndef FINISHEDWIDGET_H
 #define FINISHEDWIDGET_H
 
-#include <QWidget>
+#include <QTableWidget>
 
 class FinishedWidget : public QWidget
 {

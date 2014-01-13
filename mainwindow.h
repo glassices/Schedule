@@ -4,15 +4,17 @@
 #include <QMainWindow>
 #include <mainwidget.h>
 #include <timebarwidget.h>
-#include <finishedwidget.h>
-#include <failedwidget.h>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QTableWidget>
 #include <sdk.h>
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
+public slots:
+    void receiveItem(QDateTime, QString);
 
 public:
     MainWindow(QWidget *parent = 0);
@@ -22,10 +24,12 @@ protected:
 private:
     MainWidget *mainWidget;
     TimeBarWidget *timeBarWidget;
-    FinishedWidget *finishedWidget;
-    FailedWidget *failedWidget;
+    QTableWidget *finishedWidget;
+    QTableWidget *failedWidget;
     QHBoxLayout *bottomLayout;
     QVBoxLayout *mainLayout;
+    int tot_finished;
+    int tot_failed;
 
     void readSettings();
     void writeSettings();

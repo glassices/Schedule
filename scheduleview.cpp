@@ -7,6 +7,7 @@
 #include <QTimer>
 #include <QDatetime>
 #include <QList>
+#include "mainwindow.h"
 
 ScheduleView::ScheduleView(QWidget *parent) :
     QGraphicsView(parent)
@@ -26,10 +27,11 @@ ScheduleView::ScheduleView(QWidget *parent) :
     setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
     /* End */
 
+    connect(this,
+            SIGNAL(failItem(QDateTime, QString)),
+            (this->parent()->parent()->parent()),
+            SLOT(receiveItem(QDateTime, QString)));
     timeShaft = new TimeShaftItem(this);
-    //taskItem = new TaskItem(this,"wangwangwang");
-    //scene->addItem(taskItem);
-    //taskItem->setPos(100,-50);
     scene->addItem(timeShaft);
     timeShaft->setPos(0, 70);
     qDebug() << scene->items().size() << endl;
@@ -37,17 +39,14 @@ ScheduleView::ScheduleView(QWidget *parent) :
     /* Here we put all items into the scene */
     QDateTime currentDateTime = QDateTime::currentDateTime();
 
-    qDebug() << items->size() << endl;
-    for (int i = 0; i < items->size(); i++) {
-        qDebug() << i << ' ';
-        qDebug() << items->at(i).itemName << endl;
-    }
     for (int i = 0; i < items->size(); i++)
         if (items->at(i).dateTime > currentDateTime) {
             TaskItem *taskItem = new TaskItem(this, items->at(i).itemName, items->at(i).dateTime);
             scene->addItem(taskItem);
             taskItem->setPos(0, 0);
-
+        }
+        else {
+            emit failItem(items->at(i).dateTime, items->at(i).itemName);
         }
     //qDebug() << scene->items().size() << endl;
     /* Here we put all items into the scene */
@@ -79,56 +78,21 @@ void ScheduleView::refreshItemPosition()
 void ScheduleView::timerEvent(QTimerEvent *event)
 {
     if (event->timerId() == refreshTimerId) {
-        //qDebug() << scene->items.size() << endl;
-        //for (int i = 0; i < items->size(); i++)
-        //    qDebug() << items->at(i).dateTime << ' ';
-        //qDebug() << endl;
-
         TaskItem tmp;
         foreach (QGraphicsItem *item, scene->items())
             if (item->type() == tmp.type()) {
-                //qDebug() << ((TaskItem *)item)->seeTime() << endl;
                 if (((TaskItem *)item)->seeTime() < QDateTime::currentDateTime()) {
+                    emit failItem(((TaskItem *)item)->seeTime(), ((TaskItem *)item)->seeName());
                     scene->removeItem(item);
                     continue;
                 }
                 QDateTime cur = QDateTime::currentDateTime(), now = ((TaskItem *)item)->seeTime();
                 int curPosition = TimeShaftItem::calcPosition((qreal)(cur.secsTo(now)) / 60 / 60);
-                qDebug() << curPosition << ' ' << now << ' ' << gls::TIMER_SHAFT_LENGTH << ' ' << curPosition << endl;
-                //qDebug() << gls::TIMER_SHAFT_LENGTH << endl;
                 if (curPosition >= 0 && curPosition <= gls::TIMER_SHAFT_LENGTH - 10) {
                     item->show();
-                    //QPointF hehe = timeShaft->mapToScene(QPointF(curPosition-1000, 0));
-                    //qDebug() << hehe.x() << ' ' << hehe.y() << endl;
                     item->setPos(timeShaft->mapToScene(QPointF(curPosition-gls::TIMER_SHAFT_LENGTH/2+((TaskItem *)item)->seeWidth()/2, 0)));
-                    //item->setPos(0, 0);
                 }
                 else item->hide();
-                //qDebug() << 1 << ' ' << 2 << endl;
             }
-
-        /*
-
-        QList<Node *> nodes;
-        foreach (QGraphicsItem *item, scene()->items()) {
-            if (Node *node = qgraphicsitem_cast<Node *>(item))
-                nodes << node;
-        }
-
-        foreach (Node *node, nodes)
-            node->calculateForces();
-
-        bool itemsMoved = false;
-        foreach (Node *node, nodes) {
-            if (node->advance())
-                itemsMoved = true;
-        }
-
-        if (!itemsMoved) {
-            killTimer(timerId);
-            timerId = 0;
-        }
-        */
-
     }
 }

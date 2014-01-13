@@ -3,14 +3,22 @@
 #include <QPoint>
 #include <QSize>
 #include <QCloseEvent>
+#include <QTableWidget>
+#include <QTableWidgetItem>
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     mainWidget = new MainWidget(this);
+    finishedWidget = new QTableWidget(200, 2, mainWidget);
+    failedWidget = new QTableWidget(200, 2, mainWidget);
+    finishedWidget->setHorizontalHeaderItem(0, new QTableWidgetItem("Name"));
+    finishedWidget->setHorizontalHeaderItem(1, new QTableWidgetItem("Date"));
+    failedWidget->setHorizontalHeaderItem(0, new QTableWidgetItem("Name"));
+    failedWidget->setHorizontalHeaderItem(1, new QTableWidgetItem("Date"));
+    tot_finished = tot_failed = 0;
     timeBarWidget = new TimeBarWidget(mainWidget);
-    finishedWidget = new FinishedWidget(mainWidget);
-    failedWidget = new FailedWidget(mainWidget);
 
     /* Set the layout */
     bottomLayout = new QHBoxLayout();
@@ -32,6 +40,12 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
 
+}
+void MainWindow::receiveItem(QDateTime datetime, QString name)
+{
+    failedWidget->setItem(tot_failed, 0, new QTableWidgetItem(name));
+    failedWidget->setItem(tot_failed, 1, new QTableWidgetItem(datetime.toString()));
+    tot_failed++;
 }
 void MainWindow::readSettings()
 {
