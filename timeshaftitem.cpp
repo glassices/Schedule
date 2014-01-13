@@ -11,6 +11,8 @@ int TimeShaftItem::calcPosition(qreal hour)
 {
     return qRound(log((hour - startPosition) * (exp(0.1) - 1) / 6 + 1) * 300 / ratio);
 }
+qreal TimeShaftItem::ratio = 1;
+qreal TimeShaftItem::startPosition = 1;
 TimeShaftItem::TimeShaftItem(ScheduleView *scheduleView) :
     graph(scheduleView)
 {
@@ -19,9 +21,7 @@ TimeShaftItem::TimeShaftItem(ScheduleView *scheduleView) :
     setFlag(ItemIsSelectable);
     //setAcceptHoverEvents(true);
     setZValue(-1);
-    ratio = 1;
     isPressed = 0;
-    startPosition = 0;
     scaleRatio = 1;
 }
 QRectF TimeShaftItem::boundingRect() const

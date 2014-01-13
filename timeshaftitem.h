@@ -14,6 +14,8 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     void mactransform(int delta);
     void zoom(int delta, QPointF scenePosition);
+    static int calcPosition(qreal hour);
+    static qreal ratio, startPosition;
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
@@ -23,12 +25,9 @@ protected:
     //void dragMoveEvent(QGraphicsSceneDragDropEvent *event);
 private:
     bool isPressed;
-    qreal ratio;
-    qreal startPosition; // Start position of the timer shaft
     qreal scaleRatio;
     ScheduleView *graph; // The ratio of scaling
 
-    int calcPosition(qreal hour);
     void subDraw(QPainter *painter, qreal H, qreal previous, qreal current, int flag, int curHour, int curMinute = 60);
 };
 

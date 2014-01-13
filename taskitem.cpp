@@ -8,7 +8,8 @@
 #include <QTime>
 #include <QDate>
 
-TaskItem::TaskItem(ScheduleView* scheduleView, QString message, QDateTime dt):
+TaskItem::TaskItem() {}
+TaskItem::TaskItem(ScheduleView* scheduleView, QString message, QDateTime dt) :
     graph(scheduleView), info(message), datetime(dt)
 {
     setFlag(ItemIsSelectable);
@@ -16,25 +17,37 @@ TaskItem::TaskItem(ScheduleView* scheduleView, QString message, QDateTime dt):
     setZValue(-1);
     width = info.length() * 15;
 }
+QDateTime TaskItem::seeTime()
+{
+    return datetime;
+}
+int TaskItem::seeWidth()
+{
+    return width;
+}
+QString TaskItem::seeName()
+{
+    return info;
+}
 QRectF TaskItem::boundingRect() const
 {
     qreal adjust=2;
     return QRectF(-width / 2 - adjust, -wang::TASK_ITEM_HEIGHT / 2 - adjust, width + adjust * 2, wang::TASK_ITEM_HEIGHT + adjust * 2);
 
 }
- void TaskItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
- {
-     Q_UNUSED(option);
-     Q_UNUSED(widget);
-     painter->setPen(Qt::black);
-     painter->setBrush(Qt::NoBrush);
-     QFont font = painter->font();
-     font.setWeight(5);
-     font.setPointSize(10);
-     painter->setFont(font);
-     painter->drawText(QPointF(-width/2,0),info);
-     painter->drawRect(QRectF(-width/2,-wang::TASK_ITEM_HEIGHT/2,width/2,wang::TASK_ITEM_HEIGHT/2));
- }
+void TaskItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
+    painter->setPen(Qt::black);
+    painter->setBrush(Qt::NoBrush);
+    QFont font = painter->font();
+    font.setWeight(5);
+    font.setPointSize(10);
+    painter->setFont(font);
+    painter->drawText(QPointF(-width/2,0),info);
+    painter->drawRect(QRectF(-width/2,-wang::TASK_ITEM_HEIGHT/2,width/2,wang::TASK_ITEM_HEIGHT/2));
+}
 QPainterPath TaskItem::shape() const
 {
     QPainterPath path;

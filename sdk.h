@@ -9,6 +9,7 @@
 
 #include <QVariant>
 #include <QDateTime>
+#include <QGraphicsItem>
 
 /* Namespace for glassices */
 
@@ -25,6 +26,7 @@ namespace gls
     const int TIMER_SHAFT_LENGTH = 700;
     const int MINIMUM_UNDER_WIDGET = 400;
     const int TIMER_SHAFT_DELTA = 30;
+
     struct Record
     {
         QDateTime dateTime;

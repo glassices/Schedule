@@ -63,6 +63,7 @@ void TimeBarWidget::readItems()
         gls::Record record;
         record.dateTime = settings.value("dateTime").toDateTime();
         record.itemName = settings.value("itemName").toString();
+        //qDebug() << record.dateTime << ' ' << record.itemName << endl;
         items.append(record);
     }
     settings.endArray();
@@ -85,7 +86,12 @@ void TimeBarWidget::showDialog()
 
     newDialogBox->exec();
     if (newDialogBox->result() == QDialog::Accepted) {
-        QDateTime datetime(QDate(newDialogBox->yearEdit->text().toInt(), 1, 1), QTime(0, 0, 0));
+        QDateTime datetime(QDate(newDialogBox->yearEdit->text().toInt(),
+                                 newDialogBox->monthEdit->text().toInt(),
+                                 newDialogBox->dayEdit->text().toInt()),
+                           QTime(newDialogBox->hourEdit->text().toInt(),
+                                 newDialogBox->minuteEdit->text().toInt(),
+                                 0));
         gls::Record record;
         record.dateTime = datetime;
         record.itemName = newDialogBox->nameEdit->text();
