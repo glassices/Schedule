@@ -16,5 +16,6 @@ int main(int argc, char *argv[])
     QTextStream filetext(&file);
     QString stylesheet = filetext.readAll();
     app.setStyleSheet(stylesheet);
+    app.setStyle("macintosh");
     return app.exec();
 }
