@@ -27,6 +27,9 @@ private:
     qreal startPosition; // Start position of the timer shaft
     qreal scaleRatio;
     ScheduleView *graph; // The ratio of scaling
+
+    int calcPosition(qreal hour);
+    void subDraw(QPainter *painter, qreal H, qreal previous, qreal current, int flag, int curHour, int curMinute = 60);
 };
 
 #endif // TIMESHAFTITEM_H

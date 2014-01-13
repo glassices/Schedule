@@ -17,6 +17,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
+protected:
+    void closeEvent(QCloseEvent *event);
 private:
     MainWidget *mainWidget;
     TimeBarWidget *timeBarWidget;
@@ -24,6 +26,9 @@ private:
     FailedWidget *failedWidget;
     QHBoxLayout *bottomLayout;
     QVBoxLayout *mainLayout;
+
+    void readSettings();
+    void writeSettings();
 };
 
 #endif // MAINWINDOW_H
